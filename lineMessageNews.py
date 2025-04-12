@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     while True:
         now = datetime.now().strftime("%H:%M:%S")
-        logging.info(f"每分鐘檢查任務中，目前時間：{now}")
+        logging.info(f"每 10 秒檢查任務中，目前時間：{now}")
         
         if not schedule.run_pending():
             logging.info("現在不是中午 12:00，任務不執行")
