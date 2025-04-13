@@ -6,6 +6,11 @@ from datetime import datetime
 import schedule
 import time
 import logging
+import os
+
+# 設置時區
+os.environ['TZ'] = 'Asia/Taipei'
+time.tzset()
 
 # 設置日誌配置
 logging.basicConfig(
@@ -13,9 +18,13 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
 )
 
+current_tz = time.tzname
+logging.info(f"目前時區設定: {current_tz}")
+logging.info(f"目前時間: {datetime.now()}")
+
 URL = 'https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFZxYUdjU0JYcG9MVlJYR2dKVVZ5Z0FQAQ?hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant'
-CHANNEL_TOKEN=''
-GROUP_ID=''
+CHANNEL_TOKEN='3alsDGCaFprBkLH2OPSmz/Cnz/bsqzJ0AuYg8LTwBc7d7LTLrZ8R/W+OLQc2i4Gpr6SfNIRFNJBt00waEvjqrKetkQYxvC3yPBccXe4RJKwDX6zNNztP59AZsGyxfYWD5xswQ5KX4VxF0nnFl1tNXgdB04t89/1O/w1cDnyilFU='
+GROUP_ID='C7abdc5ac309b5deb30603743495d53cc'
 
 def fetch_google_news_text(count):
     response = requests.get(URL)
@@ -95,7 +104,7 @@ if __name__ == "__main__":
 
     while True:
         now = datetime.now().strftime("%H:%M:%S")
-        logging.info(f"每 10 秒檢查任務中，目前時間：{now}")
+        logging.info(f"每分鐘檢查任務中，目前時間：{now}")
         
         if not schedule.run_pending():
             logging.info("現在不是中午 12:00，任務不執行")
